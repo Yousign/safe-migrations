@@ -1,0 +1,10 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+parameters:
+    inferPrivatePropertyTypeFromConstructor: true
+    tipsOfTheDay: false
+    checkMissingIterableValueType: false
+    tmpDir: var/.phpstan.cache
+    level: 9
+    paths: [ src, tests ]

@@ -1,0 +1,47 @@
+{
+    "name": "yousign/safe-migrations",
+    "description": "Make your migrations safe",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benoit Galati",
+            "email": "benoit.galati@yousign.com"
+        },
+        {
+            "name": "Nicolas Dousson",
+            "email": "nicolas.dousson@yousign.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Yousign\\SafeMigrations\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yousign\\SafeMigrations\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "doctrine/dbal": "^3.7",
+        "doctrine/migrations": "^3.7",
+        "symfony/string": "^6.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.9",
+        "phpstan/phpstan": "1.8.2",
+        "phpstan/phpstan-phpunit": "1.1.1",
+        "phpunit/phpunit": "^10.4.2",
+        "symfony/var-dumper": ">=6.3.8"
+    }
+}
