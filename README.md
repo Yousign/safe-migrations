@@ -5,7 +5,7 @@ Make your migrations safe
 ## 🪄 Features
 
 - PG 13+
-- PHP 8.2
+- PHP 8.1
 - Doctrine Migration
 
 ## 🤷 Why?
