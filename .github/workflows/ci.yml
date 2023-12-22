@@ -1,6 +1,10 @@
 name: CI
 
-on: [ pull_request, push ]
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
 
 env:
   COMPOSER_UPDATE_FLAGS: "--no-interaction --no-progress --prefer-dist "
@@ -29,12 +33,16 @@ jobs:
       - name: Composer dependencies
         run: COMPOSER_UPDATE_FLAGS+="${{matrix.composer_update_flags}}" make vendor
 
+      - name: Lint
+        run: find . -name '*.php' -path './src/*' | parallel -j 4 php -l {}
+
       - name: PHPUnit
         run: make phpunit
 
   static-analysis:
     runs-on: ubuntu-latest
     name: Static analysis
+
     steps:
       - uses: actions/checkout@v2
 

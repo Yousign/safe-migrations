@@ -8,11 +8,11 @@ use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Driver\Middleware;
 use Psr\Log\LoggerInterface;
 
-final readonly class RetryLockTimeoutMiddleware implements Middleware
+final class RetryLockTimeoutMiddleware implements Middleware
 {
     public function __construct(
-        private LoggerInterface $logger,
-        private bool $isEnabled,
+        private readonly LoggerInterface $logger,
+        private readonly bool $isEnabled,
     ) {
     }
 
