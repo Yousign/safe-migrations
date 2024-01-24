@@ -139,6 +139,10 @@ abstract class Migration extends AbstractMigration
     protected function setColumnNotNullable(string $table, string $name): void
     {
         $constraintName = sprintf('chk_null_%s_%s', $table, $name);
+        $this->addUnsafeSql(sprintf('ALTER TABLE %s DROP CONSTRAINT IF EXISTS "%s"',
+            $table,
+            $constraintName,
+        ));
         $this->addUnsafeSql(sprintf('ALTER TABLE %s ADD CONSTRAINT "%s" CHECK (%s IS NOT NULL) NOT VALID',
             $table,
             $constraintName,

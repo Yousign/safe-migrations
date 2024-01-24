@@ -213,6 +213,7 @@ final class MigrationTest extends TestCase
         $this->migration->setColumnNotNullable('signer', 'email');
 
         $this->assertSql([
+            'ALTER TABLE signer DROP CONSTRAINT IF EXISTS "chk_null_signer_email"',
             'ALTER TABLE signer ADD CONSTRAINT "chk_null_signer_email" CHECK (email IS NOT NULL) NOT VALID',
             "SET statement_timeout TO '0'",
             'ALTER TABLE signer VALIDATE CONSTRAINT "chk_null_signer_email"',
