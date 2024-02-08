@@ -110,6 +110,8 @@ $this->commentOnColumn(table: 'address', name: 'name', comment: null)
 
 <details><summary>Add index</summary>
 
+> Note: Adding an index on a table will execute an "analyze" on all columns of the table to update statistics
+
 ```php
 $this->addIndex(name: 'idx_contact_email', table: 'contact', columns: ['email'], unique: false, usingMethod: 'GIN', where: 'country = "France"')
 ```
