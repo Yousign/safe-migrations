@@ -37,7 +37,7 @@ abstract class Migration extends AbstractMigration
         $this->throwIrreversibleMigrationException();
     }
 
-    protected function addUnsafeSql(string $sql, array $params = [], array $types = [], int $statementTimeout = null): void
+    protected function addUnsafeSql(string $sql, array $params = [], array $types = [], ?int $statementTimeout = null): void
     {
         if (null !== $statementTimeout) {
             parent::addSql("SET statement_timeout TO '{$statementTimeout}s'");
@@ -76,6 +76,7 @@ abstract class Migration extends AbstractMigration
             $where ? " WHERE $where" : '',
         ));
         $this->addUnsafeSql("SET lock_timeout TO '3s'");
+        $this->addUnsafeSql(sprintf('ANALYZE %s', $table));
     }
 
     protected function dropIndex(string $name): void
@@ -88,7 +89,7 @@ abstract class Migration extends AbstractMigration
         $this->addUnsafeSql(sprintf('ALTER INDEX %s RENAME TO %s', $from, $to));
     }
 
-    protected function addColumn(string $table, string $name, string $type, string $defaultValue = null, bool $nullable = true): void
+    protected function addColumn(string $table, string $name, string $type, ?string $defaultValue = null, bool $nullable = true): void
     {
         if (null !== $defaultValue && u($defaultValue)->trim()->ignoreCase()->equalsTo('NULL')) {
             throw new AbortMigration(__METHOD__.' requires the usage of null PHP value instead of string one as default value.');
@@ -192,7 +193,7 @@ abstract class Migration extends AbstractMigration
      * @param string|null $options Can be used to add things like:
      *                             [ ON DELETE|ON UPDATE referential_action ] [ DEFERRABLE|NOT DEFERRABLE ] [ INITIALLY DEFERRED|INITIALLY IMMEDIATE ]
      */
-    protected function addForeignKey(string $table, string $name, string $column, string $referenceTable, string $referenceColumn, string $options = null): void
+    protected function addForeignKey(string $table, string $name, string $column, string $referenceTable, string $referenceColumn, ?string $options = null): void
     {
         $this->addUnsafeSql(sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)%s NOT VALID',
             $table,

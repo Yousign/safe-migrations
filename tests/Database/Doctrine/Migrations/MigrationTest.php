@@ -71,6 +71,7 @@ final class MigrationTest extends TestCase
             'SET lock_timeout TO \'0\'',
             'CREATE INDEX CONCURRENTLY idx_approver_email ON approver (email)',
             'SET lock_timeout TO \'3s\'',
+            'ANALYZE approver',
         ]);
     }
 
@@ -83,6 +84,7 @@ final class MigrationTest extends TestCase
             'SET lock_timeout TO \'0\'',
             'CREATE INDEX CONCURRENTLY idx_approver_first_name_email ON approver (first_name,email)',
             'SET lock_timeout TO \'3s\'',
+            'ANALYZE approver',
         ]);
     }
 
@@ -95,6 +97,7 @@ final class MigrationTest extends TestCase
             'SET lock_timeout TO \'0\'',
             'CREATE UNIQUE INDEX CONCURRENTLY uq_signer_email ON signer (email)',
             'SET lock_timeout TO \'3s\'',
+            'ANALYZE signer',
         ]);
     }
 
@@ -107,6 +110,7 @@ final class MigrationTest extends TestCase
             'SET lock_timeout TO \'0\'',
             'CREATE INDEX CONCURRENTLY idx_signer_email ON signer USING GIN(email)',
             'SET lock_timeout TO \'3s\'',
+            'ANALYZE signer',
         ]);
     }
 
@@ -119,6 +123,7 @@ final class MigrationTest extends TestCase
             'SET lock_timeout TO \'0\'',
             'CREATE INDEX CONCURRENTLY idx_signer_email ON signer (email) WHERE name = "foo"',
             'SET lock_timeout TO \'3s\'',
+            'ANALYZE signer',
         ]);
     }
 
@@ -331,7 +336,7 @@ class TestMigration extends Migration
         throw new \Exception('Unused for this test');
     }
 
-    public function addUnsafeSql(string $sql, array $params = [], array $types = [], int $statementTimeout = null): void
+    public function addUnsafeSql(string $sql, array $params = [], array $types = [], ?int $statementTimeout = null): void
     {
         parent::addUnsafeSql($sql, $params, $types, $statementTimeout);
     }
@@ -351,7 +356,7 @@ class TestMigration extends Migration
         parent::renameIndex($from, $to);
     }
 
-    public function addColumn(string $table, string $name, string $type, string $defaultValue = null, bool $nullable = true): void
+    public function addColumn(string $table, string $name, string $type, ?string $defaultValue = null, bool $nullable = true): void
     {
         parent::addColumn($table, $name, $type, $defaultValue, $nullable);
     }
@@ -396,7 +401,7 @@ class TestMigration extends Migration
         parent::createTable($table, $columnDefinitions);
     }
 
-    public function addForeignKey(string $table, string $name, string $column, string $referenceTable, string $referenceColumn, string $options = null): void
+    public function addForeignKey(string $table, string $name, string $column, string $referenceTable, string $referenceColumn, ?string $options = null): void
     {
         parent::addForeignKey($table, $name, $column, $referenceTable, $referenceColumn, $options);
     }
